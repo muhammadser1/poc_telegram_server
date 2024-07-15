@@ -1,6 +1,8 @@
 import pymongo
 from fastapi import FastAPI, HTTPException, Depends
+import requests
 import random
+from constans import pokemonApi_url
 from models import MongoDB
 
 server = FastAPI()
@@ -30,3 +32,15 @@ def generate_and_store_random(mongodb: MongoDB = Depends(MongoDB.get_mongodb)):
 
     except HTTPException as e:
         raise e
+
+
+@server.get("/pokemon/{pokemon_name}")
+def get_pokemon(pokemon_name: str):
+    url = f"{pokemonApi_url}{pokemon_name}"
+    response = requests.get(url)
+
+    if response.status_code != 200:
+        raise HTTPException(status_code=404, detail="No Pokemon found with the given ID")
+
+    pokemon_info = response.json()
+    return {"message": f"Pokemon '{pokemon_name}' found", "name": pokemon_name, "id": pokemon_info["id"]}
