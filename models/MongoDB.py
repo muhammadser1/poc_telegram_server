@@ -15,16 +15,26 @@ class MongoDB:
         self.collection = self.db['random_numbers']
 
     def connect(self):
-        mongo = pymongo.MongoClient(mongodb_url)
-        return mongo
+        try:
+            mongo = pymongo.MongoClient(mongodb_url)
+            return mongo
+        except pymongo.errors.ConnectionFailure as e:
+            print(f"Failed to connect to MongoDB: {e}")
+            raise e
 
     def storeNumber(self, number: int):
-        result = self.collection.insert_one({'number': number})
-        return result.inserted_id
+        try:
+            result = self.collection.insert_one({'number': number})
+            return result.inserted_id
+        except pymongo.errors.PyMongoError as e:
+            raise e
 
     def getNumber(self, number: int):
-        existing_document = self.collection.find_one({'number': number})
-        return existing_document
+        try:
+            existing_document = self.collection.find_one({'number': number})
+            return existing_document
+        except pymongo.errors.PyMongoError as e:
+            raise e
 
 
 def get_mongodb():
