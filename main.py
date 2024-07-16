@@ -13,7 +13,7 @@ def test():
     return {"message": "Welcome to the poc telegram Server"}
 
 
-@server.post("/random-numbers")
+@server.get("/random-numbers")
 def generate_and_store_random(mongodb: MongoDB = Depends(MongoDB.get_mongodb)):
     try:
         random_number = random.randint(1, 100)
