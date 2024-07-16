@@ -2,7 +2,7 @@ import pymongo
 from fastapi import FastAPI, HTTPException, Depends
 import requests
 import random
-from constans import pokemonApi_url
+from server.constans import pokemonApi_url
 from models import MongoDB
 
 server = FastAPI()
