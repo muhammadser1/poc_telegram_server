@@ -31,6 +31,7 @@ def generate_and_store_random(mongodb: MongoDB = Depends(MongoDB.get_mongodb)):
         raise HTTPException(status_code=500, detail=f"PyMongo error occurred: {str(e)}")
 
     except HTTPException as e:
+        print(mongodb,random_number)
         raise e
 
 
