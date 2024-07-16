@@ -16,6 +16,7 @@ class MongoDB:
 
     def connect(self):
         try:
+            print(mongodb_url)
             mongo = pymongo.MongoClient(mongodb_url)
             return mongo
         except pymongo.errors.ConnectionFailure as e:
