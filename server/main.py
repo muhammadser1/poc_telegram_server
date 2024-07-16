@@ -2,7 +2,7 @@ import pymongo
 from fastapi import FastAPI, HTTPException, Depends
 import requests
 import random
-from constans import pokemonApi_url
+from server.constans import pokemonApi_url
 from models import MongoDB
 
 server = FastAPI()
@@ -13,7 +13,7 @@ def test():
     return {"message": "Welcome to the poc telegram Server"}
 
 
-@server.post("/random-numbers")
+@server.get("/random-numbers")
 def generate_and_store_random(mongodb: MongoDB = Depends(MongoDB.get_mongodb)):
     try:
         random_number = random.randint(1, 100)
